@@ -4,7 +4,7 @@ project:
   title:        "Logic Locked reversible 2-Bit ALU"      # Project title
   author:       "Fawaz Ahmed"      # Your name
   discord:      ""      # Your discord username, for communication and automatically assigning you a Tapeout role (optional)
-  description:  ""      # One line description of what your project does
+  description:  "Secure 2-Bit Reversible ALU with bijective mapping and Fredkin-gate-logic locking "      # One line description of what your project does
   language:     "Wokwi" # other examples include SystemVerilog, Amaranth, VHDL, etc
   clock_hz:     0       # Clock frequency in Hz (or 0 if not applicable)
 
@@ -16,25 +16,25 @@ project:
 # This section is for the datasheet/website. Use descriptive names (e.g., RX, TX, MOSI, SCL, SEG_A, etc.).
 pinout:
   # Inputs
-  ui[0]: ""
-  ui[1]: ""
-  ui[2]: ""
-  ui[3]: ""
-  ui[4]: ""
-  ui[5]: ""
-  ui[6]: ""
-  ui[7]: ""
+  ui[0]: "A0 (Input A Bit 0)"
+  ui[1]: "A1 (Input A Bit 1)"
+  ui[2]: "B0 (Input B Bit 0)"
+  ui[3]: "B1 (Input B Bit 1)"
+  ui[4]: "M0 (Mode Select 0)"
+  ui[5]: "M1 (Mode Select 1)"
+  ui[6]: "K0 (Security Key 0)"
+  ui[7]: "K1 (Security Key 1)"
 
-  # Outputs
-  uo[0]: ""
-  uo[1]: ""
-  uo[2]: ""
-  uo[3]: ""
-  uo[4]: ""
-  uo[5]: ""
-  uo[6]: ""
-  uo[7]: ""
-
+  # Outputs(Mapped to 7 Segment Display w/ DP)
+  uo[0]: "R0 (Result Bit 0 / Seg A)"
+  uo[1]: "R1 (Result Bit 1 / Seg B)"
+  uo[2]: "RC (Carry Out / Seg C)"
+  uo[3]: "M0_OUT (Preserved Mode 0 / Seg D)"
+  uo[4]: "M1_OUT (Preserved Mode 1 / Seg E)"
+  uo[5]: "A0_OUT (Preserved Input A0 / Seg F)"
+  uo[6]: "B0_OUT (Preserved Input B0 / Seg G)"
+  uo[7]: "B1_OUT (Preserved Input B1 / Seg DP)"
+  
   # Bidirectional pins
   uio[0]: ""
   uio[1]: ""
