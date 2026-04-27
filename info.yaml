@@ -15,7 +15,7 @@ project:
 # The pinout of your project. Leave unused pins blank. DO NOT delete or add any pins.
 # This section is for the datasheet/website. Use descriptive names (e.g., RX, TX, MOSI, SCL, SEG_A, etc.).
 pinout:
-  # Inputs: (LSB - Least Significant Bit, MSB - MOst Significant Bit, Following Little Endian)
+  # Inputs: (LSB - Least Significant Bit, MSB - Most Significant Bit, Following Little Endian)
   ui[0]: "A0 (Input A Bit 0 (LSB))"
   ui[1]: "A1 (Input A Bit 1 (MSB))"
   ui[2]: "B0 (Input B Bit 0 (LSB))"
