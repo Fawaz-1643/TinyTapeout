@@ -57,7 +57,7 @@ The circuit is purely combinational. Set the input switches (`ui[0-7]`) and obse
 |------------|------------|-----------|-------------------|
 | OFF (0)    | OFF (0)    | ADD       | Result = A + B (with Carry) |
 | OFF (0)    | ON (1)     | XOR       | Result = A ⊕ B |
-| ON (1)     | OFF (0)    | SWAP      | Result = Swap A (A0 to R1, A1 to R0) |
+| ON (1)     | OFF (0)    | SHIFT      | Result = Swap A (A0 to R1, A1 to R0) |
 | ON (1)     | ON (1)     | PASS      | Result = A (Bypasses ALU) |
 
 **Note:** In a constrained 2-bit Reversible architecture, a logical left shift acts functionally as a swap to prevent destroying the MSB, maintaining perfect bijection.
