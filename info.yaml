@@ -4,7 +4,7 @@ project:
   title:        "Logic Locked reversible 2-Bit ALU"      # Project title
   author:       "Fawaz Ahmed"      # Your name
   discord:      ""      # Your discord username, for communication and automatically assigning you a Tapeout role (optional)
-  description:  "Secure 2-Bit Reversible ALU with bijective mapping and Fredkin-gate-logic locking "      # One line description of what your project does
+  description:  "Secure 2-Bit Reversible ALU with bijective mapping and Fredkin gate logic locking"      # One line description of what your project does
   language:     "Wokwi" # other examples include SystemVerilog, Amaranth, VHDL, etc
   clock_hz:     0       # Clock frequency in Hz (or 0 if not applicable)
 
@@ -25,15 +25,15 @@ pinout:
   ui[6]: "K0 (Security Key 0: Valid is Off)"
   ui[7]: "K1 (Security Key 1: Valid is ON)"
 
-  # Outputs (Mapping to your 7-Segment Display + DP)
-  uo[0]: "R0 (Result Bit 0 / Seg A)"
-  uo[1]: "R1 (Result Bit 1 / Seg B)"
-  uo[2]: "RC (Carry Out / Seg C)"
-  uo[3]: "M0_OUT (Preserved Mode 0 / Seg D)"
-  uo[4]: "M1_OUT (Preserved Mode 1 / Seg E)"
-  uo[5]: "A0_OUT (Preserved Input A0 / Seg F)"
-  uo[6]: "B0_OUT (Preserved Input B0 / Seg G)"
-  uo[7]: "B1_OUT (Preserved Input B1 / Seg DP)"
+  # Outputs (Raw ALU Math + Preserved Reversible Garbage Bits)
+  uo[0]: "R0 (Result Bit 0 - LSB)"
+  uo[1]: "R1 (Result Bit 1 - MSB)"
+  uo[2]: "RC (Carry Out)"
+  uo[3]: "M0_OUT (Preserved Mode 0)"
+  uo[4]: "M1_OUT (Preserved Mode 1)"
+  uo[5]: "A0_OUT (Preserved Input A0)"
+  uo[6]: "B0_OUT (Preserved Input B0)"
+  uo[7]: "B1_OUT (Preserved Input B1)"
   
   # Bidirectional pins
   uio[0]: ""
