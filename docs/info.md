@@ -1,32 +1,46 @@
-<!---
-
-This file is used to generate your project datasheet. Please fill in the information below and delete any unused
-sections.
-
-You can also include images in this folder and reference them in the markdown. Each image must be less than
-512 kb in size, and the combined size of all images must be less than 1 MB.
--->
-
 ## How it works
 
-The 2-Bit Logic Locked ALU is a processor core that was builty purely by using reversibe logic gates such as Toffoli, Fredkin and Peres gates. This design is strictly to 1-to-1 or bijective, ensuring that essentially no information is lost or destroyed during computation. The entire architecture can be organized into 5 main phases:
+This design implements a secure 2-bit Reversible ALU using universal reversible gates (Toffoli, Fredkin, and Peres). 
 
-1. Authentication: First, a Toffoli-gate network validates a 2-bit security key
-2. Decoding: Then, a decoder identifies the requested instruction(ADD, XOR, SHIFT, PASS)
-3. Arithmetic: A network of Peres gates is used to simultaneously calculate the 2-bit addition(with the carry) as well as bitwise XOR and bit-rotation(SHIFT).
-4. Decision Making (Fredkin Routing Tree): A three stage tree of Fredkin gates (Controlled Swap) acts as a decision maker. It is used to route the desired mathematical results to the output pins while also preserving the original operands and mode to ensure reversibility.
-5. Hardware Obfuscation Lock: Based on the output of the first step, the ouput is protected by a final Fredkin lock stage. If provided an incorrect key, the circuit swaps the result pins R0 and R1(rather than simple inversion to reduce reverse engineering attacks) and inverts the carry bit. This will allow the circuit to appear functional while providing incorrect outputs to unauthorized users.
+The design follows **Little Endian** bit ordering for all inputs and outputs. For example, the 2-bit security key (Binary 10) is entered by setting Bit 0 (Switch 7) to OFF and Bit 1 (Switch 8) to ON. 
+
+The circuit first validates the 2-bit hardware key (Key = 10). If the key is valid, the user can select between Addition, XOR, Shift, and Pass-through modes via the M0 and M1 switches. If the key is invalid, the internal routing logic is intentionally flipped, causing the ALU to output the result of a different operation than the one selected (e.g., performing an XOR when Addition was requested).
+
+To maintain a 1-to-1 bijective mapping required for reversible computing, the circuit preserves 5 bits of the original input as "garbage outputs" alongside the 3-bit math result. The design occupies a 1x1 tile and falls well within the 1000-gate limit[cite: 1].
 
 ## How to test
-(Keep in mind that the switches will follow Little Endian format i.e. for any sequence of two bits, the Least Significant Bit (LSB) comes first followed by the Most Significant Bit (MSB) (or just generally the binary must be read from right to left/down to up for a set of bits). For example the Security Key is 10 in binary, thus Switch 7 would be OFF(0) and Switch 8 would be ON(1). Hence 01 ------> 
 
+The circuit is purely combinational. Set the input switches (ui[0-7]) and observe the output LEDs (uo[0-7]). 
 
-The project can be tested using an 8-pin switch for input and a 7-segment display for output. Once provided the correct key (Switch 7 OFF, Switch 8 ON), the output on display acts as a unique 'fingerprint' of the input, resulting in a reversible design.
-1. Set the Security Key
-   Switch 7: OFF, Switch 8: ON (Binary: 10)
-If the key is incorrect, the results will be scrambled
+**Mode Selection Table (Valid Key K=10 Required):**
+| M1 (ui[5]) | M0 (ui[4]) | Operation | Logic Description |
+|------------|------------|-----------|-------------------|
+| OFF (0)    | OFF (0)    | ADD       | Result = A + B (with Carry) |
+| OFF (0)    | ON (1)     | XOR       | Result = A ⊕ B |
+| ON (1)     | OFF (0)    | SHIFT     | Result = A << 1 (A0 shifts to R1) |
+| ON (1)     | ON (1)     | PASS      | Result = A (Bypasses ALU) |
 
-3. Select Operation (Switches 5,6)
+**Output Mapping (Bijective Verification):**
+To verify reversibility, observe that these outputs directly mirror the input switches:
+* uo[3] mirrors ui[4] (M0)
+* uo[4] mirrors ui[5] (M1)
+* uo[5] mirrors ui[0] (A0)
+* uo[6] mirrors ui[2] (B0)
+* uo[7] mirrors ui[3] (B1)
 
+**Test Script (Valid Key: K0=OFF, K1=ON):**
 
+1. **ADD Test (1+2=3):** Set Switches to [ON, OFF, OFF, ON, OFF, OFF, OFF, ON]. 
+   - *Expected LEDs:* 1 & 2 are ON (Result=3), LED 3 is OFF.
+2. **XOR Test (3 XOR 1 = 2):** Set Switches to [ON, ON, ON, OFF, ON, OFF, OFF, ON].
+   - *Expected LEDs:* LED 1 is OFF, LED 2 is ON.
+3. **SHIFT Test (A=1 becomes 2):** Set Switches to [ON, OFF, OFF, OFF, OFF, ON, OFF, ON].
+   - *Expected LEDs:* LED 1 is OFF, LED 2 is ON (A0 moved to R1 position).
+4. **PASS Test (A=2 stays 2):** Set Switches to [OFF, ON, OFF, OFF, ON, ON, OFF, ON].
+   - *Expected LEDs:* LED 1 is OFF, LED 2 is ON (Input A passes through).
+5. **LOCK Test (Sabotaged ADD):** Set Switches to [ON, ON, ON, OFF, OFF, OFF, OFF, OFF] (Key is wrong).
+   - *Expected LEDs:* Circuit sabotages ADD and performs XOR instead. LED 2 turns ON instead of LED 3.
 
+## External hardware
+
+None required. The design is intended for use with the standard Tiny Tapeout carrier board DIP switches and an 8-LED bar graph for raw binary/bijective data visualization.
