@@ -1,4 +1,4 @@
-# 🔒 Secure 2-Bit Reversible ALU (Tiny Tapeout)
+# 🔒 IEEE Secure 2-Bit Reversible ALU (Tiny Tapeout)
 
 ## Project Overview
 This project is a hardware-secured, 2-bit Reversible Arithmetic Logic Unit (ALU). 
