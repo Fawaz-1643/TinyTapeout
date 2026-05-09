@@ -1,7 +1,7 @@
 # Tiny Tapeout project information (Wokwi project)
 project:
   wokwi_id:     462349004652630017       # Set this to the ID of your Wokwi project (the number from the project's URL)
-  title:        "IEEE Logic Locked reversible 2-Bit ALU"      # Project title
+  title:        "IEEE Logic Locked Reversible 2-Bit ALU"      # Project title
   author:       "Fawaz Ahmed"      # Your name
   discord:      ""      # Your discord username, for communication and automatically assigning you a Tapeout role (optional)
   description:  "Secure 2-Bit Reversible ALU with bijective mapping and Fredkin gate logic locking"      # One line description of what your project does
